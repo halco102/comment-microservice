@@ -1,0 +1,16 @@
+server.port: 8083
+
+spring:
+  data:
+    couchbase:
+      bucket-name: ${COUCHBASE_BUCKET_NAME} #reddit-comment
+      username: ${COUCHBASE_USERNAME} #Admin
+      password: ${COUCHBASE_PASSWORD} #halco1002
+      connection-string: ${COUCHBASE_CONNECTION_STRING} #127.0.0.1
+  mvc:
+    pathmatch:
+      matching-strategy: ant-path-matcher
+
+
+user-client-url: ${USER_CLIENT_URL}
+post-client-url: ${POST_CLIENT_URL}

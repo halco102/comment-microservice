@@ -5,10 +5,7 @@ import com.reddit.comment.service.IComment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/comment")
@@ -22,5 +19,9 @@ public class CommentController {
         return new ResponseEntity<>(iComment.saveComment(request), HttpStatus.OK);
     }
 
+    @GetMapping("/latest/{postId}")
+    public ResponseEntity<?> getLatestCommentsFromPost(@PathVariable Long postId) {
+        return new ResponseEntity<>(iComment.getLatestCommentsFromPost(postId), HttpStatus.OK);
+    }
 
 }

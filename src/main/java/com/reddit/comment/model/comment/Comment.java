@@ -11,21 +11,20 @@ import org.springframework.data.couchbase.core.mapping.Document;
 import org.springframework.data.couchbase.core.mapping.id.GeneratedValue;
 import org.springframework.data.couchbase.core.mapping.id.GenerationStrategy;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @Document
-public class Comment {
+public class Comment extends BaseComment{
 
-    @Id
-    @GeneratedValue(strategy = GenerationStrategy.UNIQUE)
-    private String id;
+    private List<Reply> replies = new ArrayList<>();
 
-    private PostDto postDto;
-
-    private UserDto userDto;
-
-    private String comment;
-
+    public Comment(String id, PostDto postDto, UserDto userDto, String comment, LocalDateTime createdAt, List<Reply> replies) {
+        super(id, postDto, userDto, comment, createdAt);
+        this.replies = replies;
+    }
 
 }

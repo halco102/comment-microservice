@@ -7,13 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CommentRequest {
+public class LikeDislikeCommentRequest {
 
-    private Long postId;
+    private String id;
 
-    private String comment;
-
-    private String parentId;
-
+    private boolean isLike;
 
 }

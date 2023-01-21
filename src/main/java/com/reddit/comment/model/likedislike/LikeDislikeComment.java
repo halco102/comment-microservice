@@ -1,6 +1,7 @@
 package com.reddit.comment.model.likedislike;
 
 
+import com.reddit.comment.feign.user.dto.UserDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,9 +13,9 @@ import org.springframework.data.couchbase.core.mapping.Document;
 @Document
 public class LikeDislikeComment {
 
-    private String id;
+    private String commentId;
 
-    private Long userId;
+    private UserDto userDto;
 
     private boolean isLike;
 

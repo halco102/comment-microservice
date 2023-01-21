@@ -8,12 +8,14 @@ import com.reddit.comment.model.comment.Reply;
 import com.reddit.comment.payload.comment.CommentRequest;
 import com.reddit.comment.repository.CommentRepository;
 import com.reddit.comment.repository.ReplyRepository;
+import com.reddit.comment.security.JwtTokenUtil;
 import com.reddit.comment.service.IComment;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -30,10 +32,12 @@ public class CommentService implements IComment {
 
     private final ReplyRepository replyRepository;
 
-    @Override
-    public Comment saveComment(CommentRequest request) {
+    private final JwtTokenUtil jwtTokenUtil;
 
-        var fetchUser = userClient.getUserById(request.getUserId());
+    @Override
+    public Comment saveComment(CommentRequest request, String jwt) {
+
+        var fetchUser = userClient.findUserByUsername(jwtTokenUtil.getUsernameByJwt(jwt));
 
         var fetchPost = postClient.getPostById(request.getPostId());
 
@@ -48,14 +52,18 @@ public class CommentService implements IComment {
                 throw new NotFoundException("The parent comment does not exist");
 
             //save reply to db
-            var saveReplyToDb = replyRepository.save(new Reply(null, fetchPost, fetchUser, request.getComment(), LocalDateTime.now(), request.getParentId()));
+            var saveReplyToDb = replyRepository.save(new Reply(null,
+                    fetchPost, fetchUser,
+                    request.getComment(), LocalDateTime.now(),
+                    new ArrayList<>(),
+                    request.getParentId()));
 
             //add reply to parent comment
             fetchParentComment.get().getReplies().add(saveReplyToDb);
 
             return commentRepository.save(fetchParentComment.get());
         }
-        return commentRepository.save(new Comment(null, fetchPost, fetchUser, request.getComment(),LocalDateTime.now() ,null));
+        return commentRepository.save(new Comment(null, fetchPost, fetchUser, request.getComment(),LocalDateTime.now(), new ArrayList<>(),null));
     }
 
     @Override
@@ -73,4 +81,13 @@ public class CommentService implements IComment {
     public List<Comment> getLatestCommentsFromPost(Long postId) {
         return commentRepository.getLatestCommentFromPost(postId);
     }
+
+    @Override
+    public Long numberOfCommentsInPost(Long postId) {
+        var fetchNumbers = commentRepository.numberOfCommentsInPost(postId);
+
+        return fetchNumbers;
+    }
+
+
 }

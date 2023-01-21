@@ -11,6 +11,13 @@ spring:
     pathmatch:
       matching-strategy: ant-path-matcher
 
+  #Kafka
+  kafka:
+    bootstrap-servers: ${BOOTSTRAP_SERVER}
+    consumer:
+      group-id: halco
+    listener:
+      ack-mode: RECORD
 
 user-client-url: ${USER_CLIENT_URL}
 post-client-url: ${POST_CLIENT_URL}

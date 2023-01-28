@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -73,4 +74,19 @@ public class LikeDislikeCommentService implements ILikeDislike {
             throw new NotFoundException("Exception");
         }
     }
+
+    @Override
+    public List<LikeDislikeComment> getAllUserLikeDislikeOnComment(Long userId) {
+
+        List<LikeDislikeComment> result = new ArrayList<>();
+
+        var mainComment = commentRepository.getAllUsersLikeDislikeFromMainComment(userId).orElseGet(() -> new ArrayList<>());
+        var replies = commentRepository.getAllUserLikeDislikeFromReplies(userId).orElseGet(() -> new ArrayList<>());
+
+        result.addAll(mainComment);
+        result.addAll(replies);
+
+        return result;
+    }
+
 }

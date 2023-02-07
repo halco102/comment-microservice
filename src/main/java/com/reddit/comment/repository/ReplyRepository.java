@@ -1,3 +1,4 @@
+/*
 package com.reddit.comment.repository;
 
 import com.reddit.comment.model.comment.Reply;
@@ -7,3 +8,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ReplyRepository extends BaseCommentRepository<Reply> {
 }
+*/

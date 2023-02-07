@@ -11,7 +11,7 @@ import java.util.Optional;
 @Repository
 public interface CommentRepository extends BaseCommentRepository<Comment> {
 
-    @Query("#{#n1ql.selectEntity} WHERE postDto.id = $1 AND #{#n1ql.filter} ORDER BY createdAt DESC")
+    @Query("#{#n1ql.selectEntity} WHERE postDto.id = $1 AND #{#n1ql.filter} AND ARRAY_LENGTH(parentIds) = 0 ORDER BY createdAt DESC")
     List<Comment> getLatestCommentFromPost(Long postId);
 
     @Query("#{#n1ql.selectEntity} WHERE userDto.id = $1 AND #{#n1ql.filter} ORDER BY createdAt DESC")

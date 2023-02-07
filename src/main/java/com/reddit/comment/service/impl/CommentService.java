@@ -7,7 +7,6 @@ import com.reddit.comment.feign.user.controller.UserClient;
 import com.reddit.comment.model.comment.Comment;
 import com.reddit.comment.payload.comment.CommentRequest;
 import com.reddit.comment.repository.CommentRepository;
-import com.reddit.comment.repository.ReplyRepository;
 import com.reddit.comment.security.JwtTokenUtil;
 import com.reddit.comment.service.IComment;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +29,6 @@ public class CommentService implements IComment {
 
     private final PostClient postClient;
 
-    private final ReplyRepository replyRepository;
 
     private final JwtTokenUtil jwtTokenUtil;
 
@@ -86,11 +84,13 @@ public class CommentService implements IComment {
 
         if (mainParent.get().getReplies().isEmpty()) {
             mainParent.get().getReplies().add(reply);
+            reply.setMention(mainParent.get().getUserDto().getUsername());
             return mainParent.get();
         }
 
         if (levels.size() == 1 && mainParent.get().getId().matches(levels.get(0))) {
             mainParent.get().getReplies().add(reply);
+            reply.setMention(mainParent.get().getUserDto().getUsername());
             return mainParent.get();
         }
 
@@ -105,6 +105,7 @@ public class CommentService implements IComment {
 
         if (comment.getId().matches(level)) {
             comment.getReplies().add(newComment);
+            newComment.setMention(comment.getUserDto().getUsername());
             return;
         }
 

@@ -26,8 +26,8 @@ public class Comment extends BaseComment{
 
     public Comment(String id, PostDto postDto, UserDto userDto, String comment,
                    LocalDateTime createdAt, List<LikeDislikeComment> likeDislikeComment, List<Comment> replies,
-                   Set<String> parentIds) {
-        super(id, postDto, userDto, comment, createdAt, likeDislikeComment);
+                   Set<String> parentIds, String mention) {
+        super(id, postDto, userDto, comment, createdAt, likeDislikeComment, mention);
         this.replies = replies;
         this.parentIds = parentIds;
     }

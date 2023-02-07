@@ -71,7 +71,7 @@ public class CommentService implements IComment {
         //persist new comment/reply in db
         var saveReply = commentRepository.save(reply);
 
-        var mainObject = addReplyToObjectAndReturnIt(reply);
+        var mainObject = addReplyToObjectAndReturnIt(saveReply);
 
         return commentRepository.save(mainObject);
    }

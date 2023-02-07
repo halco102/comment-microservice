@@ -8,10 +8,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.couchbase.core.mapping.Document;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /*
 * Comment is composed of BaseComment and Reply which is also composed of BaseComment with extra value parentId
@@ -22,7 +19,8 @@ import java.util.Set;
 @Document
 public class Comment extends BaseComment{
 
-    private Set<String> parentIds = new HashSet<>();
+    //keep order of input
+    private Set<String> parentIds = new LinkedHashSet<>();
 
     private List<Comment> replies = new ArrayList<>();
 

@@ -9,7 +9,9 @@ import org.springframework.data.couchbase.core.mapping.Document;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /*
 * Comment is composed of BaseComment and Reply which is also composed of BaseComment with extra value parentId
@@ -20,11 +22,16 @@ import java.util.List;
 @Document
 public class Comment extends BaseComment{
 
-    private List<Reply> replies = new ArrayList<>();
+    private Set<String> parentIds = new HashSet<>();
 
-    public Comment(String id, PostDto postDto, UserDto userDto, String comment, LocalDateTime createdAt, List<LikeDislikeComment> likeDislikeComment, List<Reply> replies) {
+    private List<Comment> replies = new ArrayList<>();
+
+    public Comment(String id, PostDto postDto, UserDto userDto, String comment,
+                   LocalDateTime createdAt, List<LikeDislikeComment> likeDislikeComment, List<Comment> replies,
+                   Set<String> parentIds) {
         super(id, postDto, userDto, comment, createdAt, likeDislikeComment);
         this.replies = replies;
+        this.parentIds = parentIds;
     }
 
     @Override

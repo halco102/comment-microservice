@@ -33,4 +33,6 @@ public interface CommentRepository extends BaseCommentRepository<Comment> {
             "FROM `reddit-comment` as rc unnest rc.replies as rp unnest rp.likeDislikeComments as ld where ld.userDto.id = $1")
     Optional<List<LikeDislikeComment>> getAllUserLikeDislikeFromReplies(Long userId);
 
+    @Query("#{#n1ql.selectEntity} where #{#n1ql.filter} and meta().id = $1")
+    Optional<Comment> getCommentById(String commentId);
 }

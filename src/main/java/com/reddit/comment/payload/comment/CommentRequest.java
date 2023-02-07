@@ -15,5 +15,4 @@ public class CommentRequest {
 
     private String parentId;
 
-
 }

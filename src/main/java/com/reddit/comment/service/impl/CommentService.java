@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -28,7 +27,6 @@ public class CommentService implements IComment {
     private final UserClient userClient;
 
     private final PostClient postClient;
-
 
     private final JwtTokenUtil jwtTokenUtil;
 
@@ -80,7 +78,8 @@ public class CommentService implements IComment {
         var mainParent = commentRepository.findById(reply.getParentIds().stream().findFirst().get());
 
         //u reply imam koji su leveli u pitanju za potraznju svog komentara kojeg trebam update-at
-        List<String> levels = reply.getParentIds().stream().collect(Collectors.toList());
+       // List<String> levels = reply.getParentIds().stream().collect(Collectors.toList());
+        List<String> levels = reply.getParentIds();
 
         if (mainParent.get().getReplies().isEmpty()) {
             mainParent.get().getReplies().add(reply);
@@ -96,7 +95,17 @@ public class CommentService implements IComment {
 
         String lastlevel = levels.get(levels.size() - 1);
 
-        addReply(mainParent.get(), reply, lastlevel);
+        if (reply.getParentIds().size() > 4) {
+
+            //4 is the max
+            lastlevel = levels.get(3);
+
+            addReply(mainParent.get(), reply, lastlevel);
+
+        }else {
+            addReply(mainParent.get(), reply, lastlevel);
+        }
+
 
         return mainParent.get();
     }
@@ -112,7 +121,7 @@ public class CommentService implements IComment {
         for (Comment reply : comment.getReplies()) {
             addReply(reply, newComment, level);
         }
-
+        
     }
 
 
@@ -139,5 +148,4 @@ public class CommentService implements IComment {
         return fetchNumbers;
     }
 
-
-}
+    }

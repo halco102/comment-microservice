@@ -20,13 +20,13 @@ import java.util.*;
 public class Comment extends BaseComment{
 
     //keep order of input
-    private Set<String> parentIds = new LinkedHashSet<>();
+    private List<String> parentIds = new ArrayList<>();
 
     private List<Comment> replies = new ArrayList<>();
 
     public Comment(String id, PostDto postDto, UserDto userDto, String comment,
                    LocalDateTime createdAt, List<LikeDislikeComment> likeDislikeComment, List<Comment> replies,
-                   Set<String> parentIds, String mention) {
+                   List<String> parentIds, String mention) {
         super(id, postDto, userDto, comment, createdAt, likeDislikeComment, mention);
         this.replies = replies;
         this.parentIds = parentIds;

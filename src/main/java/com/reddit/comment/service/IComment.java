@@ -39,4 +39,12 @@ public interface IComment {
     Long numberOfCommentsInPost(Long postId);
 
 
+    /*
+    * I don't think that I will do it like reddit with n number of indentations on frontend,
+    * maybe I'll do it as Facebook with 2 levels of indentations.
+    *
+    * Then this method will be used when backend calls all comments for a specific post,
+    * and to present it more clean on FE
+    * */
+    //List<Comment> flattenCommentToTwoLevels(Long postId);
 }

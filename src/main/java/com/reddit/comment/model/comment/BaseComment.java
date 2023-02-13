@@ -33,6 +33,8 @@ public abstract class BaseComment {
 
     private List<LikeDislikeComment> likeDislikeComments = new ArrayList<>();
 
+    private String mention;
+
     @Override
     public String toString() {
         return "BaseComment{" +

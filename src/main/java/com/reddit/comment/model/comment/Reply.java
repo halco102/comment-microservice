@@ -1,3 +1,4 @@
+/*
 package com.reddit.comment.model.comment;
 
 import com.reddit.comment.feign.post.dto.PostDto;
@@ -7,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -15,7 +17,8 @@ public class Reply extends BaseComment {
 
     private String parentId;
 
-    public Reply(String id, PostDto postDto, UserDto userDto, String comment, LocalDateTime createdAt, List<LikeDislikeComment> likeDislikeComments) {
+
+    public Reply(String id, PostDto postDto, UserDto userDto, String comment, LocalDateTime createdAt, List<LikeDislikeComment> likeDislikeComments, String men) {
         super(id, postDto, userDto, comment, createdAt, likeDislikeComments);
     }
 
@@ -23,4 +26,6 @@ public class Reply extends BaseComment {
         super(id, postDto, userDto, comment, createdAt, likeDislikeComments);
         this.parentId = parentId;
     }
+
 }
+*/

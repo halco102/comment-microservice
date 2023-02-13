@@ -8,8 +8,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.couchbase.core.mapping.Document;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /*
 * Comment is composed of BaseComment and Reply which is also composed of BaseComment with extra value parentId
@@ -20,11 +19,17 @@ import java.util.List;
 @Document
 public class Comment extends BaseComment{
 
-    private List<Reply> replies = new ArrayList<>();
+    //keep order of input
+    private List<String> parentIds = new ArrayList<>();
 
-    public Comment(String id, PostDto postDto, UserDto userDto, String comment, LocalDateTime createdAt, List<LikeDislikeComment> likeDislikeComment, List<Reply> replies) {
-        super(id, postDto, userDto, comment, createdAt, likeDislikeComment);
+    private List<Comment> replies = new ArrayList<>();
+
+    public Comment(String id, PostDto postDto, UserDto userDto, String comment,
+                   LocalDateTime createdAt, List<LikeDislikeComment> likeDislikeComment, List<Comment> replies,
+                   List<String> parentIds, String mention) {
+        super(id, postDto, userDto, comment, createdAt, likeDislikeComment, mention);
         this.replies = replies;
+        this.parentIds = parentIds;
     }
 
     @Override
